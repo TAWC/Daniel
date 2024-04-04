@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Gallery</title>
+    <style>
+        /* Basic styling */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+        .image-item img {
+            width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="imageGallery">
+        <!-- Images will be displayed here -->
+    </div>
+
+    <script>
+        // JavaScript to fetch images from the "photos" folder
+        window.addEventListener('DOMContentLoaded', function () {
+            fetch('photos-list.json')
+                .then(response => response.json())
+                .then(imageList => {
+                    const galleryContainer = document.getElementById('imageGallery');
+
+                    imageList.forEach(image => {
+                        const imageItem = document.createElement('div');
+                        imageItem.classList.add('image-item');
+
+                        const img = document.createElement('img');
+                        img.src = 'photos/' + image;
+
+                        imageItem.appendChild(img);
+                        galleryContainer.appendChild(imageItem);
+                    });
+                })
+                .catch(error => console.error('Error fetching image list:', error));
+        });
+    </script>
+</body>
+</html>
